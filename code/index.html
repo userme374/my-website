@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kittu Pro Website</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+  scroll-behavior: smooth;
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+.navbar h2 {
+  color: white;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url("bg.jpg") center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero h1 {
+  color: white;
+  font-size: 50px;
+}
+
+.hero p {
+  color: #ddd;
+  margin: 15px 0;
+}
+
+/* BUTTON */
+.btn {
+  padding: 12px 25px;
+  background: linear-gradient(45deg, #2563eb, #9333ea);
+  color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+/* FORM */
+.form-section {
+  padding: 80px 20px;
+  background: #0f172a;
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(15px);
+  padding: 30px;
+  border-radius: 15px;
+  width: 300px;
+  color: white;
+  text-align: center;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin: 8px 0;
+}
+
+/* FEATURES */
+.features {
+  display: flex;
+  justify-content: space-around;
+  padding: 60px 20px;
+  background: #020617;
+  color: white;
+}
+
+.box {
+  text-align: center;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .features {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hero h1 {
+    font-size: 30px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <h2>KittuSite</h2>
+  <div>
+    <a href="#">Home</a>
+    <a href="#form">Form</a>
+    <a href="#features">Features</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <h1>Build Your Dream Website 🚀</h1>
+    <p>Modern Design | Fast | Professional</p>
+    <a href="#form"><button class="btn">Start Now</button></a>
+  </div>
+</section>
+
+<!-- FORM -->
+<section id="form" class="form-section">
+  <div class="card">
+    <h2>Register Now</h2>
+
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="email" id="email" placeholder="Email">
+    <input type="tel" id="phone" placeholder="Phone">
+
+    <button class="btn" onclick="submitForm()">Submit</button>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="features">
+  <div class="box">⚡ Fast Performance</div>
+  <div class="box">🔒 Secure System</div>
+  <div class="box">🎨 Modern Design</div>
+</section>
+
+<script>
+async function submitForm() {
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
+
+  if (!name || !email || !phone) {
+    alert("Please fill all fields ❌");
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        phone
+      })
+    });
+
+    const data = await res.json();
+
+    alert(data.message);
+    console.log(data);
+
+  } catch (err) {
+    alert("Server error ❌");
+    console.error(err);
+  }
+}
+</script>
+
+</body>
+</html>
